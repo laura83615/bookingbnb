@@ -9,3 +9,7 @@ def index(request):
 
 def login(request):
     return render(request, 'bnb/login.html')
+
+
+def register(request):
+    return render(request, 'bnb/register.html')
