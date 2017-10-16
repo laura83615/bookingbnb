@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^addusr$', views.add_user, name="add_user"),
     url(r'^identification$', views.identification, name="identification"),
     url(r'^user_page/(?P<user_id>[0-9]+)$', views.user_page, name="user_page"),
+    url(r'^admin_page$', views.admin_page, name="admin_page"),
 ]

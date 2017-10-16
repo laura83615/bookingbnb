@@ -58,13 +58,9 @@ def identification(request):
     if User.objects.filter(account=account).exists():
         user = User.objects.get(account=account)
         if user.isadmin:
-            user_list = User.objects.all()
+            return HttpResponseRedirect(reverse('bnb:admin_page'))
         else:
-            user_list = User.objects.filter(account=account)
-        
-        context = {'user_list': user_list}
-        
-        return HttpResponseRedirect(reverse('bnb:user_page', args=(user.id,)))
+            return HttpResponseRedirect(reverse('bnb:user_page', args=(user.id,)))
     else:
         messages.error(request,
                        'This user is not registered yet')
@@ -75,3 +71,7 @@ def user_page(request, user_id):
     user = User.objects.get(pk=user_id)
     context = {'user': user}
     return render(request, 'bnb/user_page.html', context)
+
+
+def admin_page(request):
+    return render(request, 'bnb/admin_page.html')
