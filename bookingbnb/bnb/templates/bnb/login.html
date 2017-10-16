@@ -17,7 +17,8 @@
     </div>
 
     <div class="container">
-    <form action="">
+    <form action="{% url 'bnb:identification' %}" method="POST">
+    {% csrf_token %}
         <div class="form-group row justify-content-center">
             <label for="account" class="col-xs-3 col-form-label mr-2 sr-only">Account</label>
             <div class="col-xs-9">
@@ -38,7 +39,6 @@
 
 
     </form>
-    <hr>
     </div>
 
     <div class="container">

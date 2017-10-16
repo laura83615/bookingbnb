@@ -51,3 +51,27 @@ def isvalid_mailformat(mail):
         return False
     else:
         return True
+
+
+def identification(request):
+    account = request.POST['account']
+    if User.objects.filter(account=account).exists():
+        user = User.objects.get(account=account)
+        if user.isadmin:
+            user_list = User.objects.all()
+        else:
+            user_list = User.objects.filter(account=account)
+        
+        context = {'user_list': user_list}
+        
+        return HttpResponseRedirect(reverse('bnb:user_page', args=(user.id,)))
+    else:
+        messages.error(request,
+                       'This user is not registered yet')
+        return HttpResponseRedirect(reverse('bnb:login'))
+
+
+def user_page(request, user_id):
+    user = User.objects.get(pk=user_id)
+    context = {'user': user}
+    return render(request, 'bnb/user_page.html', context)

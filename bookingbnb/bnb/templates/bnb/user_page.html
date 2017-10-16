@@ -1,0 +1,57 @@
+{% extends 'bnb/base.html' %}
+{% block title %}user page{% endblock %}
+{% block content %}
+	<style>
+
+		body {
+	    padding-top: 1em;
+	    }
+		.title{
+		    background-color: pink;
+		    color: white;
+		    text-align: center;
+		    font-family: "Courier New", Georgia, Serif;
+		}
+
+		.table td {
+		   text-align: center;   
+		}
+
+		.table th {
+		   text-align: right;   
+		}
+	</style>
+	<div class="container title">
+	    <h1 class="display-3">User Page</h1>
+	</div>
+    {% if user %}
+    	
+    	<div class="container">
+	        <table class="table">
+	        <tbody>
+		        <tr>
+			        <th>姓名</th>
+			        <td>{{ user.name }}</td>
+		        </tr>
+		        <tr>
+			        <th>帳號</th>
+			        <td>{{ user.account }}</td>
+		        </tr>
+		        <tr>
+			        <th>郵件</th>
+			        <td>{{ user.mail }}</td>
+		        </tr>
+	        </tbody>
+	        </table>
+    	</div>
+    {% else %}
+        <p>No users are available.</p>
+    {% endif %}
+    <div class="container">
+
+    	<div class="row justify-content-center">
+    	<hr>
+    	<a href="{% url 'bnb:login'%}">登出</a>
+    	</div>
+    </div>
+{% endblock %}
