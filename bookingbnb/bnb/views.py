@@ -24,6 +24,10 @@ def add_user(request):
         messages.error(request,
                        'Password and Confirm Password are inconsistent')
         return HttpResponseRedirect(reverse('bnb:register'))
+    elif not isvalid_mailformat(request.POST['password']):
+        messages.error(request,
+                       'Email format is not valid')
+        return HttpResponseRedirect(reverse('bnb:register'))
     else:
         account = request.POST['account']
         if User.objects.filter(account=account).exists():
@@ -40,3 +44,10 @@ def add_user(request):
                         mail=mail)
             user.save()
             return HttpResponseRedirect(reverse('bnb:login'))
+
+
+def isvalid_mailformat(mail):
+    if '@' not in mail or '.' not in mail:
+        return False
+    else:
+        return True
