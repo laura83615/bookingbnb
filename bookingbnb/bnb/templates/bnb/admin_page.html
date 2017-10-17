@@ -18,10 +18,90 @@
 		}
 
 		.table th {
-		   text-align: right;   
+		   text-align: center;   
 		}
 	</style>
 	<div class="container title">
 	    <h1 class="display-3">Admin Page</h1>
 	</div>
+	<div class="container">
+		<div class="row justify-content-end">
+			<button style="width: auto" type="submit" class="btn btn-outline-warning" data-toggle="modal" data-target="#add_user_modal">新增使用者</button>
+		</div>
+	</div>
+
+	<!-- Add User Modal -->
+	<div class="modal fade" id="add_user_modal" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<h4 class="modal-title">Add New User</h4>
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			    </div>
+			    <div class="modal-body">
+			    	<form action="{% url 'bnb:add_user' %}" method="post">
+			    	{% csrf_token %}
+			    	    {% include 'bnb/add_user_form.html' %}
+			    	</form>
+			    </div>
+			    <div class="modal-footer">
+			    </div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- User List Table-->
+	{% if user_list %}
+    <div class="container">
+	    <table class="table">
+	    <thead>
+	    	<tr>
+	    		<th>姓名</th>
+	    		<th>帳號</th>
+	    		<th>郵件</th>
+	    		<th>身份</th>
+	    	</tr>
+	    </thead>
+	    <tbody>
+	    	{% if theuser %}
+	    	<tr class="table-info">
+		        <td>{{ theuser.name }}</td>
+		        <td>{{ theuser.account }}</td>
+		        <td>{{ theuser.mail }}</td>
+		        <td>admin</td>
+		        <td>
+		        	<button style="width: auto" type="submit" class="btn btn-outline-info">修改</button>
+		        	<button style="width: auto" type="submit" class="btn btn-outline-info">刪除</button>
+		        </td>
+	        </tr>
+	        {% endif %}
+	        {% for u in user_list %}
+	        {% if u.id != theuser.id %}
+		    <tr>
+		        <td>{{ u.name }}</td>
+		        <td>{{ u.account }}</td>
+		        <td>{{ u.mail }}</td>
+		        <td>
+		        	{% if u.isadmin %}
+		        	admin
+		        	{% else%}
+		        	nomal
+		        	{% endif%}
+		        </td>
+		        <td>
+		        	<button style="width: auto" type="submit" class="btn btn-outline-info">修改</button>
+		        	<button style="width: auto" type="submit" class="btn btn-outline-info">刪除</button>
+		        </td>
+	        </tr>
+	        {% endif %}
+	        {% endfor %}
+        </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>No users are available.</p>
+    {% endif %}
+
+
 {% endblock %}

@@ -20,20 +20,23 @@ def register(request):
 
 
 def add_user(request):
+    previous_url = request.META.get('HTTP_REFERER')
+    from_admin_page = False
+    add_user_success = False
+    if previous_url.split('/')[-1] == "admin_page":
+        from_admin_page = True
+
     if request.POST['password'] != request.POST['confirm_password']:
         messages.error(request,
                        'Password and Confirm Password are inconsistent')
-        return HttpResponseRedirect(reverse('bnb:register'))
-    elif not isvalid_mailformat(request.POST['password']):
+    elif not isvalid_mailformat(request.POST['mail']):
         messages.error(request,
                        'Email format is not valid')
-        return HttpResponseRedirect(reverse('bnb:register'))
     else:
         account = request.POST['account']
         if User.objects.filter(account=account).exists():
             messages.error(request,
                            'The account has already existed')
-            return HttpResponseRedirect(reverse('bnb:register'))
         else:
             password = request.POST['password']
             name = request.POST['name']
@@ -43,8 +46,15 @@ def add_user(request):
                         name=name,
                         mail=mail)
             user.save()
-            return HttpResponseRedirect(reverse('bnb:login'))
+            add_user_success = True
 
+    if from_admin_page:
+        return HttpResponseRedirect(reverse('bnb:admin_page'))
+    else:
+        if add_user_success:
+            return HttpResponseRedirect(reverse('bnb:login'))
+        else:
+            return HttpResponseRedirect(reverse('bnb:register'))
 
 def isvalid_mailformat(mail):
     if '@' not in mail or '.' not in mail:
@@ -77,4 +87,13 @@ def user_page(request):
 
 
 def admin_page(request):
-    return render(request, 'bnb/admin_page.html')
+    user_list = User.objects.all()
+    old_post = request.session.get('_old_post')
+    account = old_post['account']
+    theuser = User.objects.get(account=account)
+    context = {'theuser': theuser, 'user_list': user_list}
+    return render(request, 'bnb/admin_page.html', context)
+
+
+def delete_user(request):
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
