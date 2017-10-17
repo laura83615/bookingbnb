@@ -55,20 +55,23 @@ def isvalid_mailformat(mail):
 
 def identification(request):
     account = request.POST['account']
+    request.session['_old_post'] = request.POST
     if User.objects.filter(account=account).exists():
         user = User.objects.get(account=account)
         if user.isadmin:
             return HttpResponseRedirect(reverse('bnb:admin_page'))
         else:
-            return HttpResponseRedirect(reverse('bnb:user_page', args=(user.id,)))
+            return HttpResponseRedirect(reverse('bnb:user_page'))
     else:
         messages.error(request,
                        'This user is not registered yet')
         return HttpResponseRedirect(reverse('bnb:login'))
 
 
-def user_page(request, user_id):
-    user = User.objects.get(pk=user_id)
+def user_page(request):
+    old_post = request.session.get('_old_post')
+    account = old_post['account']
+    user = User.objects.get(account=account)
     context = {'user': user}
     return render(request, 'bnb/user_page.html', context)
 
