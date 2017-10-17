@@ -96,4 +96,6 @@ def admin_page(request):
 
 
 def delete_user(request):
+    uid = request.GET['uid']
+    User.objects.filter(pk=int(uid)).delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

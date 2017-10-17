@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^identification$', views.identification, name="identification"),
     url(r'^user_page$', views.user_page, name="user_page"),
     url(r'^admin_page$', views.admin_page, name="admin_page"),
+    url(r'^delete_user$', views.delete_user, name="delete_user"),
 ]

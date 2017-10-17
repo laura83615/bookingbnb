@@ -66,12 +66,12 @@
 	    <tbody>
 	    	{% if theuser %}
 	    	<tr class="table-info">
-		        <td>{{ theuser.name }}</td>
-		        <td>{{ theuser.account }}</td>
-		        <td>{{ theuser.mail }}</td>
-		        <td>admin</td>
+		        <td class="name">{{ theuser.name }}</td>
+		        <td class="account">{{ theuser.account }}</td>
+		        <td class="mail">{{ theuser.mail }}</td>
+		        <td class="isadmin">admin</td>
 		        <td>
-		        	<button style="width: auto" type="submit" class="btn btn-outline-info">修改</button>
+		        	<button style="width: auto" type="submit" class="btn btn-outline-info">Promote</button>
 		        	<button style="width: auto" type="submit" class="btn btn-outline-info">刪除</button>
 		        </td>
 	        </tr>
@@ -79,7 +79,7 @@
 	        {% for u in user_list %}
 	        {% if u.id != theuser.id %}
 		    <tr>
-		        <td>{{ u.name }}</td>
+		        <td class="name">{{ u.name }}</td>
 		        <td>{{ u.account }}</td>
 		        <td>{{ u.mail }}</td>
 		        <td>
@@ -90,8 +90,10 @@
 		        	{% endif%}
 		        </td>
 		        <td>
-		        	<button style="width: auto" type="submit" class="btn btn-outline-info">修改</button>
-		        	<button style="width: auto" type="submit" class="btn btn-outline-info">刪除</button>
+		        	<button style="width: auto" type="submit" class="btn btn-outline-info">Promote</button>
+		        	<form action="{% url 'bnb:delete_user' %}" style="display: inline;">
+		        		<button style="width: auto" type="submit" class="btn btn-outline-info" name="uid" value="{{u.id}}">刪除</button>
+		        	</form>
 		        </td>
 	        </tr>
 	        {% endif %}
@@ -102,6 +104,5 @@
     {% else %}
     <p>No users are available.</p>
     {% endif %}
-
-
+    
 {% endblock %}
