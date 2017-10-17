@@ -90,7 +90,9 @@
 		        	{% endif%}
 		        </td>
 		        <td>
-		        	<button style="width: auto" type="submit" class="btn btn-outline-info">Promote</button>
+		        	<form action="{% url 'bnb:promote_user' %}" style="display: inline;">
+		        		<button style="width: auto" type="submit" class="btn btn-outline-info" name="uid" value="{{u.id}}">Promote</button>
+		        	</form>
 		        	<form action="{% url 'bnb:delete_user' %}" style="display: inline;">
 		        		<button style="width: auto" type="submit" class="btn btn-outline-info" name="uid" value="{{u.id}}">刪除</button>
 		        	</form>
@@ -104,5 +106,5 @@
     {% else %}
     <p>No users are available.</p>
     {% endif %}
-    
+
 {% endblock %}

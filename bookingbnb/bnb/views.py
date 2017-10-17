@@ -99,3 +99,10 @@ def delete_user(request):
     uid = request.GET['uid']
     User.objects.filter(pk=int(uid)).delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def promote_user(request):
+    uid = request.GET['uid']
+    user = User.objects.get(pk=int(uid))
+    user.isadmin = True
+    user.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))    
