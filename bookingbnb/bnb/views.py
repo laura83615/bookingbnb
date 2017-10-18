@@ -20,6 +20,7 @@ def register(request):
 
 
 def add_user(request):
+    print(request.POST)
     previous_url = request.META.get('HTTP_REFERER')
     from_admin_page = False
     add_user_success = False
@@ -41,10 +42,15 @@ def add_user(request):
             password = request.POST['password']
             name = request.POST['name']
             mail = request.POST['mail']
+            isadmin = False
+            if from_admin_page and request.POST['identity']=='admin':
+                isadmin = True
+
             user = User(account=account,
                         password=password,
                         name=name,
-                        mail=mail)
+                        mail=mail,
+                        isadmin=isadmin)
             user.save()
             add_user_success = True
 
