@@ -27,6 +27,9 @@
 	<div class="container">
 		<div class="row justify-content-end">
 			<button style="width: auto" type="submit" class="btn btn-outline-warning" data-toggle="modal" data-target="#add_user_modal">新增使用者</button>
+			<form style="display: inline;" action="{% url 'bnb:login' %}">
+				<button style="width: auto; margin-left: 5px" type="submit" class="btn btn-outline-warning">登出</button>
+			</form>
 		</div>
 	</div>
 
@@ -71,8 +74,6 @@
 		        <td class="mail">{{ theuser.mail }}</td>
 		        <td class="isadmin">admin</td>
 		        <td>
-		        	<button style="width: auto" type="submit" class="btn btn-outline-info">Promote</button>
-		        	<button style="width: auto" type="submit" class="btn btn-outline-info">刪除</button>
 		        </td>
 	        </tr>
 	        {% endif %}
