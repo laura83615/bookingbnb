@@ -33,6 +33,16 @@
 		</div>
 	</div>
 
+	<div class="container">
+	    {% if messages %}
+	        <script type="text/javascript">
+	        {% for message in messages %}
+	            alert("{{ message|safe }}")
+	        {% endfor %}
+	        </script>
+	    {% endif %}
+	</div>
+	
 	<!-- Add User Modal -->
 	<div class="modal fade" id="add_user_modal" role="dialog">
 		<div class="modal-dialog">
