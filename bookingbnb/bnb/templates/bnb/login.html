@@ -17,6 +17,16 @@
     </div>
 
     <div class="container">
+        {% if messages %}
+            <script type="text/javascript">
+            {% for message in messages %}
+                alert("{{ message|safe }}")
+            {% endfor %}
+            </script>
+        {% endif %}    
+    </div>
+
+    <div class="container">
     <form action="{% url 'bnb:identification' %}" method="POST">
     {% csrf_token %}
         <div class="form-group row justify-content-center">

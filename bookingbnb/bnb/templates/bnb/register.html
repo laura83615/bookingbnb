@@ -16,11 +16,16 @@
         <h1 class="display-3">Welcome to BookingBnb</h1>
     </div>
 
-    {% if messages %}
-        {% for message in messages %}
-            {{ message|safe }}
-        {% endfor %}
-    {% endif %}
+    <div class="container">
+        {% if messages %}
+            <script type="text/javascript">
+            {% for message in messages %}
+                alert("{{ message|safe }}")
+            {% endfor %}
+            </script>
+        {% endif %}
+    </div>
+
     <div class="container">
     <form action="{% url 'bnb:add_user' %}" method="post">
     {% csrf_token %}
